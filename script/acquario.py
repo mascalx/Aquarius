@@ -3,7 +3,7 @@
 
 # ** AQUARIUS **
 # Written by Carlo Mascellani
-# Last update 12/12/2014
+# Last update 27/03/2017
 
 import os, glob, subprocess, time, string, sys, datetime
 from w1thermsensor import W1ThermSensor
@@ -27,6 +27,8 @@ import ImageDraw
 # 9     VCC         3V3
 # 10    GND         GND
 
+MODE = 0 # Use RGB led strips for lighting. Put 1 for on/off lamps
+
 # Configuration defaults
 t_fan_on = 25 # Temp for starting the fan
 t_fan_off = 20 # Temp to stop the fan
@@ -43,7 +45,12 @@ t_cibo=2 # Food motor on duration
 
 # Hardware settings
 fan = LED(25) # Cooling fan
-led = RGBLED(red=17, green=18, blue=27) # RGB leds strip
+if (MODE==0):
+    led = RGBLED(red=17, green=18, blue=27) # RGB leds strip
+else:
+    lamp1 = LED(17) # First lamp relay
+    lamp2 = LED(18) # Second lamp relay
+    lamp3 = LED(27) # Third lamp relay
 food = LED(12) # Feeding motor
 backlight = PWMLED(26) # LCD backlight
 sensor = W1ThermSensor() # Temperature sensor
@@ -141,17 +148,19 @@ if __name__ == '__main__':
     backlight.on()
     dd=u"\u2103"
     
+    sec=0
+    
     while True:
-        ReadConfig();
-        
-        # Shows current date and time
-        DisplayText(disp,draw,10,30,time.strftime("%d/%m/%Y %H:%M"),14,(255,255,0))
-
-        # Reads temperature and shows it
-        t=sensor.get_temperature()
-        DisplayText(disp,draw,5,70,"{:.1f}".format(t)+dd,38,(255,255,255),clear=False)
-
-        disp.display() # This actually updates the display
+        if (sec==0): # Tasks done every minute
+            # Get updated configuration
+            ReadConfig();
+            # Shows current date and time
+            DisplayText(disp,draw,10,30,time.strftime("%d/%m/%Y %H:%M"),14,(255,255,0))
+            # Reads temperature and shows it
+            t=sensor.get_temperature()
+            DisplayText(disp,draw,5,70,"{:.1f}".format(t)+dd,38,(255,255,255),clear=False)
+            # Update display
+            disp.display()
         
         # Check the temperature to drive the fan
         if (t>t_fan_on):
@@ -171,15 +180,41 @@ if __name__ == '__main__':
         t3d=(int(t3[:2])*60)+int(t3[-2:]) # Start of sunset
 
         # Checks time of day and set the right color
-        if (minuti<t1d):
-            SetStripColor(0,rgb0,rgb0) # Night
-        elif (minuti<t2d):
-            SetStripColor(minuti-t1d,rgb0,rgb1) # Dawn
-        elif (minuti<t3d):
-            SetStripColor(minuti-t2d,rgb1,rgb2) # Day
-        elif (minuti<t0d):
-            SetStripColor(minuti-t3d,rgb2,rgb3) # Sunset
-        else:
-            SetStripColor(minuti-t0d,rgb3,rgb0) # Night
+        if (MODE==0): # Using RGB leds
+            if (minuti<t1d):
+                SetStripColor(0,rgb0,rgb0) # Night
+            elif (minuti<t2d):
+                SetStripColor(minuti-t1d,rgb0,rgb1) # Dawn
+            elif (minuti<t3d):
+                SetStripColor(minuti-t2d,rgb1,rgb2) # Day
+            elif (minuti<t0d):
+                SetStripColor(minuti-t3d,rgb2,rgb3) # Sunset
+            else:
+                SetStripColor(minuti-t0d,rgb3,rgb0) # Night
+        else: # Using on/off lamps
+            if (minuti<t1d):  # Night
+                lamp1.off()
+                lamp2.off()
+                lamp3.off()
+            elif (minuti<t2d): # Dawn
+                lamp1.on()
+                lamp2.off()
+                lamp3.off()
+            elif (minuti<t3d): # Day
+                lamp1.on()
+                lamp2.on()
+                lamp3.off()
+            elif (minuti<t0d): # Sunset
+                lamp1.on()
+                lamp2.off()
+                lamp3.off()
+            else: # Night
+                lamp1.off()
+                lamp2.off()
+                lamp3.off()
 
-        time.sleep(60) # Wait 1 minute
+        # Count minutes    
+        sec=sec+1
+        if (sec==60): sec=0
+            
+        time.sleep(1) # Wait 1 second
