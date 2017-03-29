@@ -115,20 +115,9 @@ def DisplayText(disp,draw,x,y,txt,size,color,clear=True):
     return
     
 # Set strip color
-def SetStripColor(t,color1,color2):
-    """ FADING IS NOT USED AT THIS TIME
-    if (t<t_fade):
-        r=Color(color1).red+(((Color(color2).red-Color(color1).red)/t_fade)*t)
-        g=Color(color1).green+(((Color(color2).green-Color(color1).green)/t_fade)*t)
-        b=Color(color1).blue+(((Color(color2).blue-Color(color1).blue)/t_fade)*t)
-        led.color = Color(r,g,b)
-        #backlight.value = Color(r,g,b).lightness
-    else:
-        led.color = Color(color2)
-        #backlight.value = Color(color2).lightness
-    """
-    led.color=Color(color2)
-    backlight.value = Color(color2).lightness
+def SetStripColor(color1):
+    led.color=Color(color1)
+    backlight.value = Color(color1).lightness
     return
     
 # Feed the fish    
@@ -137,6 +126,10 @@ def Nutre():
     time.sleep()
     food.stop(t_cibo)
     return
+
+# Returns time object from string HH:MM
+def GetTime(t):
+    return datetime.time(int(t[:2]),int(t[-2:]))
         
 # Main program
 if __name__ == '__main__':
@@ -168,43 +161,35 @@ if __name__ == '__main__':
         if (t<t_fan_off):
             fan.off()
             
-        # Checks for time of the day
-        now = datetime.datetime.now()
-        midnight = now.replace(hour=0, minute=0, second=0, microsecond=0)
-        minuti = int((now - midnight).total_seconds() / 60)
+        # Get time of the day
+        minuti = datetime.datetime.now().time()
         
-        # Configuration time from HH:MM to minutes
-        t0d=(int(t0[:2])*60)+int(t0[-2:]) # Start of night
-        t1d=(int(t1[:2])*60)+int(t1[-2:]) # Start of dawn
-        t2d=(int(t2[:2])*60)+int(t2[-2:]) # Start of daylight
-        t3d=(int(t3[:2])*60)+int(t3[-2:]) # Start of sunset
-
         # Checks time of day and set the right color
         if (MODE==0): # Using RGB leds
-            if (minuti<t1d):
-                SetStripColor(0,rgb0,rgb0) # Night
-            elif (minuti<t2d):
-                SetStripColor(minuti-t1d,rgb0,rgb1) # Dawn
-            elif (minuti<t3d):
-                SetStripColor(minuti-t2d,rgb1,rgb2) # Day
-            elif (minuti<t0d):
-                SetStripColor(minuti-t3d,rgb2,rgb3) # Sunset
+            if (minuti<GetTime(t1)):
+                SetStripColor(0,rgb0) # Night
+            elif (minuti<GetTime(t2)):
+                SetStripColor(minuti,rgb1) # Sunrise
+            elif (minuti<GetTime(t3)):
+                SetStripColor(minuti,rgb2) # Day
+            elif (minuti<GetTime(t0)):
+                SetStripColor(minuti,rgb3) # Sunset
             else:
-                SetStripColor(minuti-t0d,rgb3,rgb0) # Night
+                SetStripColor(minuti,rgb0) # Night
         else: # Using on/off lamps
-            if (minuti<t1d):  # Night
+            if (minuti<GetTime(t1)):  # Night
                 lamp1.off()
                 lamp2.off()
                 lamp3.off()
-            elif (minuti<t2d): # Dawn
+            elif (minuti<GetTime(t2)): # Dawn
                 lamp1.on()
                 lamp2.off()
                 lamp3.off()
-            elif (minuti<t3d): # Day
+            elif (minuti<GetTime(t3)): # Day
                 lamp1.on()
                 lamp2.on()
                 lamp3.off()
-            elif (minuti<t0d): # Sunset
+            elif (minuti<GetTime(t0)): # Sunset
                 lamp1.on()
                 lamp2.off()
                 lamp3.off()
