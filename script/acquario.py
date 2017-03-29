@@ -141,19 +141,16 @@ if __name__ == '__main__':
     backlight.on()
     dd=u"\u2103"
     
-    sec=0
-    
     while True:
-        if (sec==0): # Tasks done every minute
-            # Get updated configuration
-            ReadConfig();
-            # Shows current date and time
-            DisplayText(disp,draw,10,30,time.strftime("%d/%m/%Y %H:%M"),14,(255,255,0))
-            # Reads temperature and shows it
-            t=sensor.get_temperature()
-            DisplayText(disp,draw,5,70,"{:.1f}".format(t)+dd,38,(255,255,255),clear=False)
-            # Update display
-            disp.display()
+        # Get updated configuration
+        ReadConfig();
+        # Shows current date and time
+        DisplayText(disp,draw,10,30,time.strftime("%d/%m/%Y %H:%M"),14,(255,255,0))
+        # Reads temperature and shows it
+        t=sensor.get_temperature()
+        DisplayText(disp,draw,5,70,"{:.1f}".format(t)+dd,38,(255,255,255),clear=False)
+        # Update display
+        disp.display()
         
         # Check the temperature to drive the fan
         if (t>t_fan_on):
@@ -198,8 +195,4 @@ if __name__ == '__main__':
                 lamp2.off()
                 lamp3.off()
 
-        # Count minutes    
-        sec=sec+1
-        if (sec==60): sec=0
-            
-        time.sleep(1) # Wait 1 second
+        time.sleep(60) # Wait 1 minute
