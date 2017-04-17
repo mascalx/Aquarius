@@ -117,7 +117,7 @@ def DisplayText(disp,draw,x,y,txt,size,color,clear=True):
 # Set strip color
 def SetStripColor(color1):
     led.color=Color(color1)
-    backlight.value = Color(color1).lightness
+    #backlight.value = Color(color1).lightness
     return
     
 # Feed the fish    
