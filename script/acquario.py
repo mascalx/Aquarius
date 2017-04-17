@@ -164,15 +164,15 @@ if __name__ == '__main__':
         # Checks time of day and set the right color
         if (MODE==0): # Using RGB leds
             if (minuti<GetTime(t1)):
-                SetStripColor(0,rgb0) # Night
+                SetStripColor(rgb0) # Night
             elif (minuti<GetTime(t2)):
-                SetStripColor(minuti,rgb1) # Sunrise
+                SetStripColor(rgb1) # Sunrise
             elif (minuti<GetTime(t3)):
-                SetStripColor(minuti,rgb2) # Day
+                SetStripColor(rgb2) # Day
             elif (minuti<GetTime(t0)):
-                SetStripColor(minuti,rgb3) # Sunset
+                SetStripColor(rgb3) # Sunset
             else:
-                SetStripColor(minuti,rgb0) # Night
+                SetStripColor(rgb0) # Night
         else: # Using on/off lamps
             if (minuti<GetTime(t1)):  # Night
                 lamp1.off()
