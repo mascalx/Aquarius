@@ -130,6 +130,19 @@ def Nutre():
 # Returns time object from string HH:MM
 def GetTime(t):
     return datetime.time(int(t[:2]),int(t[-2:]))
+
+# Update the web pages
+def DataUpdate(t):
+    tt="{:.1f}".format(t)
+    file = open("/var/www/data.php", "w")
+    file.write('<?php $output=\'<html><body style="margin:0;padding:0;">\';')
+    file.write('$temp="'+tt+'";')
+    file.write('$output=$output.\'<p style="color:white;font-size:18px;">\'.date("d/m/Y H:i").\'</p>\';')
+    file.write('$output=$output.\'<p style="color:white;margin:0;padding:0;font-size:18px;">Temperatura acqua:<br/><span style="color:white;font-size:32px;"><b>\'.$temp.\'&deg;C</b></span></p>\';')
+    file.write('$output=$output.\'</html></body>\';')
+    file.write('echo $output;?>')
+    file.close()
+    return
         
 # Main program
 if __name__ == '__main__':
@@ -151,6 +164,7 @@ if __name__ == '__main__':
         DisplayText(disp,draw,5,70,"{:.1f}".format(t)+dd,38,(255,255,255),clear=False)
         # Update display
         disp.display()
+        DataUpdate(t)
         
         # Check the temperature to drive the fan
         if (t>t_fan_on):
