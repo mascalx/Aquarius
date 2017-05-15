@@ -28,6 +28,7 @@ import ImageDraw
 # 10    GND         GND
 
 MODE = 0 # Use RGB led strips for lighting. Put 1 for on/off lamps
+PWMF = 0 # Use standard pwm for RGB led strip. Put 1 to use PWMLed with different frequency set
 
 # Configuration defaults
 t_fan_on = 25 # Temp for starting the fan
@@ -46,13 +47,18 @@ t_cibo=2 # Food motor on duration
 # Hardware settings
 fan = LED(25) # Cooling fan
 if (MODE==0):
-    led = RGBLED(red=17, green=18, blue=27) # RGB leds strip
+    if (PWMF==0):
+        led = RGBLED(red=17, green=18, blue=27) # RGB leds strip
+    else:
+        ledr=PWMLED(17,frequency=500);
+        ledg=PWMLED(18,frequency=500);
+        ledb=PWMLED(27,frequency=500);
 else:
     lamp1 = LED(17) # First lamp relay
     lamp2 = LED(18) # Second lamp relay
     lamp3 = LED(27) # Third lamp relay
 food = LED(12) # Feeding motor
-backlight = PWMLED(26) # LCD backlight
+backlight = PWMLED(26,frequency=500) # LCD backlight
 sensor = W1ThermSensor() # Temperature sensor
 
 # Reboot the system
@@ -116,8 +122,13 @@ def DisplayText(disp,draw,x,y,txt,size,color,clear=True):
     
 # Set strip color
 def SetStripColor(color1):
-    led.color=Color(color1)
-    backlight.value = Color(color1).lightness
+    #backlight.value = Color(color1).lightness
+    if (PWMF==0):
+        led.color=Color(color1)
+    else:
+        ledr.value=Color(color1).red
+        ledg.value=Color(color1).green
+        ledb.value=Color(color1).blue
     return
     
 # Feed the fish    
