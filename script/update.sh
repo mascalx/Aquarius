@@ -5,7 +5,6 @@ curl https://raw.githubusercontent.com/mascalx/Aquarius/master/script/acquario.p
 
 cd /var/www
 curl https://raw.githubusercontent.com/mascalx/Aquarius/master/web/index.php -o index.php
-curl https://raw.githubusercontent.com/mascalx/Aquarius/master/web/data.php -o data.php
 curl https://raw.githubusercontent.com/mascalx/Aquarius/master/web/update.php -o update.php
 curl https://raw.githubusercontent.com/mascalx/Aquarius/master/web/style.css -o style.css
 
