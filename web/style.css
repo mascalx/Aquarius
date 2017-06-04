@@ -5,6 +5,16 @@ body{background:black;margin:0;font-size:22px;color:white;}
 #data{margin-left:10px;width:90%;height:100px;border:0;}
 .maschera{margin-left:10px;float:left;color:white;border: 1px solid white;padding:15px;}
 .maschera input{color:black;font-size:22px;width:60px;}
+.button {
+    background-color: #f42316;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
 
 /**** CSS specifici per dispositivi mobili (utilizzare max-device-width quando finito lo siluppo) ****/
 @media only screen and (max-width : 1023px) {
