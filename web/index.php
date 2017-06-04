@@ -29,6 +29,9 @@
         function SetLine(valore,linea){
             document.getElementById('command').src = 'update.php?value='+valore+'&riga='+linea;
         }
+        function Upgrade(){
+            document.getElementById('command').src = 'upgrade.php';
+        }        
     </script>
 </head>
 <?php
@@ -77,7 +80,7 @@ function GetLine($n){
         <input class="jscolor {value:'<?php echo substr(GetLine(4),1,6); ?>'}" onchange="SetLine(this.jscolor,'4')" style="width:110px;height:64px;font-size:0;opacity:1;"" disabled>
     </div>
     <iframe id="command" src="" style="display:none;"></iframe>
-    <div class="pclear"><br/></div>
-    <button type="button">Aggiorna</button>
+    <div class="pclear"><br/><br/></div>
+    <button type="button" onclick="Upgrade()">Aggiorna</button>
 </body>
 </html>
