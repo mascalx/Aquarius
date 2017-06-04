@@ -177,15 +177,18 @@ if __name__ == '__main__':
         disp.display()
         DataUpdate(t)
         
-        # Check the temperature to drive the fan
-        if (t>t_fan_on):
-            fan.on()
-        if (t<t_fan_off):
-            fan.off()
-            
         # Get time of the day
         minuti = datetime.datetime.now().time()
         
+        # Check the temperature to drive the fan (disable if "lunch" time)
+        if (minuti<GetTime("11:50")) or (minuti>GetTime("12:10")):
+            if (t>t_fan_on):
+                fan.on()
+            if (t<t_fan_off):
+                fan.off()
+        else:        
+            fan.off()
+            
         # Checks time of day and set the right color
         if (MODE==0): # Using RGB leds
             if (minuti<GetTime(t1)):
