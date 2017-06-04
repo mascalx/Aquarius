@@ -76,6 +76,8 @@ function GetLine($n){
         <input style="width:110px;" type="time" name="night_time" onchange="SetLine(this.value,'3')" value=<?php echo GetLine(3); ?> /><br/>
         <input class="jscolor {value:'<?php echo substr(GetLine(4),1,6); ?>'}" onchange="SetLine(this.jscolor,'4')" style="width:110px;height:64px;font-size:0;opacity:1;"" disabled>
     </div>
+    <iframe id="command" src="" style="display:none;"></iframe>
+    <div class="pclear"><br/></div>
+    <button type="button">Aggiorna</button>
 </body>
-<iframe id="command" src="" style="display:none;"></iframe>
 </html>
