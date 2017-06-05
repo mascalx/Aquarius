@@ -43,6 +43,8 @@ t3 = "19:30" # Time for sunset (end of daylight)
 rgb3 = "#aaaa77" # Sunset color (#RRGGBB)
 t_fade = 5 # Light fading duration
 t_cibo=2 # Food motor on duration
+tf1 = "11:50" # Lunch time, so stop fan
+tf2 = "12:10" # End of lunch time, so fan can work again
 
 # Hardware settings
 fan = LED(25) # Cooling fan
@@ -90,6 +92,8 @@ def WriteConfig():
     file.write(t3+'\n')
     file.write(rgb3+'\n')
     file.write(t_fade.str()+'\n')
+    file.write(tf1+'\n')
+    file.write(tf2+'\n')
     file.close()
     return
     
@@ -98,17 +102,22 @@ def ReadConfig():
     global t_fan_on, t_fan_off, t0, t1, t2, t3
     global rgb0, rgb1, rgb2, rgb3, t_fade, t_cibo
     file = open("/home/pi/acquario.cfg", "r")
-    t_fan_on=int(file.readline())
-    t_fan_off=int(file.readline())
-    t0=file.readline()
-    rgb0=file.readline()[:7]
-    t1=file.readline()
-    rgb1=file.readline()[:7]
-    t2=file.readline()
-    rgb2=file.readline()[:7]
-    t3=file.readline()
-    rgb3=file.readline()[:7]
-    t_fade=int(file.readline())
+    try:
+        t_fan_on=int(file.readline())
+        t_fan_off=int(file.readline())
+        t0=file.readline()
+        rgb0=file.readline()[:7]
+        t1=file.readline()
+        rgb1=file.readline()[:7]
+        t2=file.readline()
+        rgb2=file.readline()[:7]
+        t3=file.readline()
+        rgb3=file.readline()[:7]
+        t_fade=int(file.readline())
+        tf1=file.readline()
+        tf2=file.readline()
+    except:
+        pass    
     file.close()
     return
 
@@ -181,7 +190,7 @@ if __name__ == '__main__':
         minuti = datetime.datetime.now().time()
         
         # Check the temperature to drive the fan (disable if "lunch" time)
-        if (minuti<GetTime("11:50")) or (minuti>GetTime("12:10")):
+        if (minuti<GetTime(tf1)) or (minuti>GetTime(tf2)):
             if (t>t_fan_on):
                 fan.on()
             if (t<t_fan_off):
