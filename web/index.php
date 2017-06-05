@@ -30,7 +30,10 @@
             document.getElementById('command').src = 'update.php?value='+valore+'&riga='+linea;
         }
         function Upgrade(){
-            document.getElementById('command').src = 'upgrade.php';
+            var ask=confirm("Aggiornamento del sistema.\nSei sicuro?");
+            if(ask){
+                document.getElementById('command').src = 'upgrade.php';
+            }    
         }        
     </script>
 </head>
@@ -80,7 +83,7 @@ function GetLine($n){
         <input class="jscolor {value:'<?php echo substr(GetLine(4),1,6); ?>'}" onchange="SetLine(this.jscolor,'4')" style="width:110px;height:64px;font-size:0;opacity:1;"" disabled>
     </div>
     <iframe id="command" src="" style="display:none;"></iframe>
-    <div class="pclear"><br/><br/></div>
+    <div class="pclear"><br/><br/><br/></div>
     <center><button type="button" class="button" onclick="Upgrade()">Aggiorna</button></center>
 </body>
 </html>
