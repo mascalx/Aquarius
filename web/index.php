@@ -61,17 +61,16 @@ function GetLine($n){
     <div id="messaggio" style="color:yellow;" class="pclear"><br/></div>
     <iframe id="data" src="data.php"></iframe>
     <br/><br/>
-    <div class="maschera">
-        <b>Alba</b><br/><br/>
-        <input style="width:110px;" type="time" name="night_time"  onchange="SetLine(this.value,'5')"value=<?php echo GetLine(5); ?> /><br/>
-        <input class="jscolor {value:'<?php echo substr(GetLine(6),1,6); ?>'}" onchange="SetLine(this.jscolor,'6')" style="width:110px;height:64px;font-size:0;opacity:1;" disabled>
-    </div>
-    <div class="maschera">
-        <b>Giorno</b><br/><br/>
-        <input style="width:110px;" type="time" name="night_time"  onchange="SetLine(this.value,'7')"value=<?php echo GetLine(7); ?> /><br/>
-        <input class="jscolor {value:'<?php echo substr(GetLine(8),1,6); ?>'}" onchange="SetLine(this.jscolor,'8')" style="width:110px;height:64px;font-size:0;opacity:1;" disabled>
-    </div>
-    <div class="pclear"><br/></div>
+<div class="maschera" style="width:180px;">
+   <b>Ventilazione:</b><br/><br/>
+   Avvia: <input style="float:right;" type="number" name="fan_start" min="0" max="35" onchange="SetLine(this.value,'1')" value=<?php echo GetLine(1); ?> /><br/>
+   Ferma: <input style="float:right;" type="number" name="fan_stop" min="0" max="35" onchange="SetLine(this.value,'2')" value=<?php echo GetLine(2); ?> /><br/><br/>
+ </div>
+<div class="maschera" style="width:180px;">
+  Inizio: <input style="width:110px;height:32px;float:right;" type="time" name="lunch_time" onchange="SetLine(this.value,'12')" value=<?php echo GetLine(12); ?> /><br/>
+  Fine: <input style="width:110px;height:32px;float:right;" type="time" name="elunch_time" onchange="SetLine(this.value,'13')" value=<?php echo GetLine(13); ?> /><br/><br/>
+</div> 
+<div class="pclear"><br/></div>
     <p style="margin-left:10px;"><b>Illuminazione</b></p>
     <div class="pclear"></div>
     <div class="maschera">
