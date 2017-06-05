@@ -81,6 +81,6 @@ function GetLine($n){
     </div>
     <iframe id="command" src="" style="display:none;"></iframe>
     <div class="pclear"><br/><br/></div>
-    <button type="button" onclick="Upgrade()">Aggiorna</button>
+    <center><button type="button" class="button" onclick="Upgrade()">Aggiorna</button></center>
 </body>
 </html>
