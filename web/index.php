@@ -33,8 +33,11 @@
             var ask=confirm("Aggiornamento del sistema.\nSei sicuro?");
             if(ask){
                 document.getElementById('command').src = 'upgrade.php';
-                setInterval(function(){window.location = '/';},45000);
-            }    
+                setInterval(function(){
+                                    window.countdown=window.countdown-1;
+                                    document.getElementById('messaggio').innerHTML='<br/>Attendere '+countdown.toString()+' secondi...<br/>';
+                                    if (window.countdown==0){window.location = '/';}
+                                },1000);            }    
         }        
     </script>
 </head>
@@ -52,7 +55,7 @@ function GetLine($n){
 ?>
 <body>
     <div style="width:98%;background:navy;padding:5px;"><img id="logo" src="img/aquarius.png"/><div id="header" style="color:cyan;">Aquarius</div></div>
-    <div class="pclear"><br/></div>
+    <div id="messaggio" class="pclear"><br/></div>
     <iframe id="data" src="data.php"></iframe>
     <br/><br/>
     <div class="maschera">
