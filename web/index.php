@@ -37,7 +37,7 @@
                 window.scrollTo(0, 0);
                 setInterval(function(){
                                     window.countdown=window.countdown-1;
-                                    document.getElementById('messaggio').innerHTML='<br/>Attendere '+countdown.toString()+' secondi...<br/><br/>';
+                                    document.getElementById('messaggio').innerHTML='<br/><center>Attendere '+countdown.toString()+' secondi...</center><br/><br/>';
                                     if (window.countdown==0){window.location = '/';}
                                 },1000);
             }    
@@ -92,5 +92,6 @@ function GetLine($n){
     <iframe id="command" src="" style="display:none;"></iframe>
     <div class="pclear"><br/><br/><br/></div>
     <center><button type="button" class="button" onclick="Upgrade()">Aggiorna</button></center>
+    <div class="pclear"><br/></div>
 </body>
 </html>
