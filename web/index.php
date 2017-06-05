@@ -40,7 +40,7 @@
                                     document.getElementById('messaggio').innerHTML='<br/><center>Attendere '+countdown.toString()+' secondi...</center><br/><br/>';
                                     if (window.countdown==0){window.location = '/';}
                                 },1000);
-            }    
+            }
         }        
     </script>
 </head>
