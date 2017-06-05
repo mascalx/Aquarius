@@ -37,7 +37,8 @@
                                     window.countdown=window.countdown-1;
                                     document.getElementById('messaggio').innerHTML='<br/>Attendere '+countdown.toString()+' secondi...<br/>';
                                     if (window.countdown==0){window.location = '/';}
-                                },1000);            }    
+                                },1000);
+            }    
         }        
     </script>
 </head>
