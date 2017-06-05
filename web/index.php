@@ -31,7 +31,7 @@
         }
         function Upgrade(){
             var ask=confirm("Aggiornamento del sistema.\nSei sicuro?");
-            if(ask){
+            if(ask){ 
                 document.getElementById('command').src = 'upgrade.php';
             }    
         }        
