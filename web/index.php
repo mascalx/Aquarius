@@ -33,6 +33,7 @@
             var ask=confirm("Aggiornamento del sistema.\nSei sicuro?");
             if(ask){ 
                 document.getElementById('command').src = 'upgrade.php';
+                setInterval(function(){window.location = '/';},45000);
             }    
         }        
     </script>
