@@ -34,6 +34,7 @@
             if(ask){
                 window.countdown=60;
                 document.getElementById('command').src = 'upgrade.php';
+                window.scrollTo(0, 0);
                 setInterval(function(){
                                     window.countdown=window.countdown-1;
                                     document.getElementById('messaggio').innerHTML='<br/>Attendere '+countdown.toString()+' secondi...<br/><br/>';
