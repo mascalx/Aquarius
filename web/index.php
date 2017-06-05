@@ -69,7 +69,7 @@ function GetLine($n){
     <div class="maschera">
         <b>Giorno</b><br/><br/>
         <input style="width:110px;" type="time" name="night_time"  onchange="SetLine(this.value,'7')"value=<?php echo GetLine(7); ?> /><br/>
-        <input class="jscolor {value:'<?php echo substr(GetLine(8),1,6); ?>'}" onchange="SetLine(this.jscolor,'8')" style="width:110px;height:64px;font-size:0;opacity:1;"" disabled>
+        <input class="jscolor {value:'<?php echo substr(GetLine(8),1,6); ?>'}" onchange="SetLine(this.jscolor,'8')" style="width:110px;height:64px;font-size:0;opacity:1;" disabled>
     </div>
     <div class="pclear"><br/></div>
     <p style="margin-left:10px;"><b>Illuminazione</b></p>
