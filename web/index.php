@@ -67,6 +67,7 @@ function GetLine($n){
         Ferma: <input style="float:right;" type="number" name="fan_stop" min="0" max="35" onchange="SetLine(this.value,'2')" value=<?php echo GetLine(2); ?> /><br/><br/>
     </div>
     <div class="maschera" style="width:180px;">
+        <b>Dosaggio cibo:</b><br/><br/>
         Inizio: <input style="width:110px;height:32px;float:right;" type="time" name="lunch_time" onchange="SetLine(this.value,'12')" value=<?php echo GetLine(12); ?> /><br/>
         Fine: <input style="width:110px;height:32px;float:right;" type="time" name="elunch_time" onchange="SetLine(this.value,'13')" value=<?php echo GetLine(13); ?> /><br/><br/>
     </div> 
