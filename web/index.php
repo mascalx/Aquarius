@@ -64,7 +64,10 @@ function GetLine($n){
     <div class="maschera">
         <b>Temperature ventilazione:</b><br/><br/>
         Start: <input type="number" name="fan_start" min="0" max="35" onchange="SetLine(this.value,'1')" value=<?php echo GetLine(1); ?> /><br/>
-        Stop: <input type="number" name="fan_stop" min="0" max="35" onchange="SetLine(this.value,'2')" value=<?php echo GetLine(2); ?> /><br/>
+        Stop: <input type="number" name="fan_stop" min="0" max="35" onchange="SetLine(this.value,'2')" value=<?php echo GetLine(2); ?> /><br/><br/>
+        <b>Dosaggio cibo:</b><br/><br/>
+        <input style="width:110px;" type="time" name="lunch_time" onchange="SetLine(this.value,'12')" value=<?php echo GetLine(12); ?> /><br/>
+        <input style="width:110px;" type="time" name="elunch_time" onchange="SetLine(this.value,'13')" value=<?php echo GetLine(13); ?> /><br/>
     </div>
     <div class="pclear"><br/></div>
     <p style="margin-left:10px;"><b>Illuminazione</b></p>
