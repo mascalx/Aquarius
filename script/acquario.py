@@ -149,7 +149,10 @@ def Nutre():
 
 # Returns time object from string HH:MM
 def GetTime(t):
-    return datetime.time(int(t[:2]),int(t[-2:]))
+    try:
+        return datetime.time(int(t[:2]),int(t[-2:]))
+    except:
+        return datetime.datetime.now().time()
 
 # Update the web pages
 def DataUpdate(t):
