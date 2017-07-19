@@ -101,8 +101,8 @@ def WriteConfig():
 def ReadConfig():
     global t_fan_on, t_fan_off, t0, t1, t2, t3
     global rgb0, rgb1, rgb2, rgb3, t_fade, t_cibo
-    file = open("/home/pi/acquario.cfg", "r")
     try:
+        file = open("/home/pi/acquario.cfg", "r")
         t_fan_on=int(file.readline())
         t_fan_off=int(file.readline())
         t0=file.readline()
@@ -116,9 +116,9 @@ def ReadConfig():
         t_fade=int(file.readline())
         tf1=file.readline()
         tf2=file.readline()
+        file.close()
     except:
         pass    
-    file.close()
     return
 
 # Write the text on the display  
@@ -132,12 +132,15 @@ def DisplayText(disp,draw,x,y,txt,size,color,clear=True):
 # Set strip color
 def SetStripColor(color1):
     #backlight.value = Color(color1).lightness
-    if (PWMF==0):
-        led.color=Color(color1)
-    else:
-        ledr.value=Color(color1).red
-        ledg.value=Color(color1).green
-        ledb.value=Color(color1).blue
+    try:
+        if (PWMF==0):
+            led.color=Color(color1)
+        else:
+            ledr.value=Color(color1).red
+            ledg.value=Color(color1).green
+            ledb.value=Color(color1).blue
+    except:
+        pass
     return
     
 # Feed the fish    
@@ -156,15 +159,18 @@ def GetTime(t):
 
 # Update the web pages
 def DataUpdate(t):
-    tt="{:.1f}".format(t)
-    file = open("/var/www/data.php", "w")
-    file.write('<?php $output=\'<html><body style="margin:0;padding:0;">\';')
-    file.write('$temp="'+tt+'";')
-    file.write('$output=$output.\'<p style="color:white;font-size:18px;">\'.date("d/m/Y H:i").\'</p>\';')
-    file.write('$output=$output.\'<p style="color:white;margin:0;padding:0;font-size:18px;">Temperatura acqua:<br/><span style="color:white;font-size:32px;"><b>\'.$temp.\'&deg;C</b></span></p>\';')
-    file.write('$output=$output.\'</html></body>\';')
-    file.write('echo $output;?>')
-    file.close()
+    try:
+        tt="{:.1f}".format(t)
+        file = open("/var/www/data.php", "w")
+        file.write('<?php $output=\'<html><body style="margin:0;padding:0;">\';')
+        file.write('$temp="'+tt+'";')
+        file.write('$output=$output.\'<p style="color:white;font-size:18px;">\'.date("d/m/Y H:i").\'</p>\';')
+        file.write('$output=$output.\'<p style="color:white;margin:0;padding:0;font-size:18px;">Temperatura acqua:<br/><span style="color:white;font-size:32px;"><b>\'.$temp.\'&deg;C</b></span></p>\';')
+        file.write('$output=$output.\'</html></body>\';')
+        file.write('echo $output;?>')
+        file.close()
+    except:
+        pass
     return
         
 # Main program
@@ -183,7 +189,10 @@ if __name__ == '__main__':
         # Shows current date and time
         DisplayText(disp,draw,10,30,time.strftime("%d/%m/%Y %H:%M"),14,(255,255,0))
         # Reads temperature and shows it
-        t=sensor.get_temperature()
+        try:
+            t=sensor.get_temperature()
+        except:
+            pass
         DisplayText(disp,draw,5,70,"{:.1f}".format(t)+dd,38,(255,255,255),clear=False)
         # Update display
         disp.display()
@@ -235,4 +244,4 @@ if __name__ == '__main__':
                 lamp2.off()
                 lamp3.off()
 
-        time.sleep(60) # Wait 1 minute
+        time.sleep(1) # Wait 1 second
