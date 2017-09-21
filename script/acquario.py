@@ -47,7 +47,8 @@ tf1 = "11:50" # Lunch time, so stop fan
 tf2 = "12:10" # End of lunch time, so fan can work again
 
 # Hardware settings
-fan = LED(25) # Cooling fan
+fan = LED(25) # Water cooling fan
+cpufan = LED(19) # System cooling fan
 if (MODE==0):
     if (PWMF==0):
         led = RGBLED(red=17, green=18, blue=27) # RGB leds strip
@@ -172,6 +173,12 @@ def DataUpdate(t):
     except:
         pass
     return
+
+# Read CPU temperature
+def getCPUtemperature():
+    res = os.popen(‘vcgencmd measure_temp’).readline()
+    temp =(res.replace(“temp=”,””).replace(“’C\n”,””))
+    return float(temp)
         
 # Main program
 if __name__ == '__main__':
@@ -209,6 +216,13 @@ if __name__ == '__main__':
                 fan.off()
         else:        
             fan.off()
+            
+        # Check CPU temperature to drive the cooling fan
+        tc = getCPUtemperature()
+        if (tc>55):
+            cpufan.on()
+        if (tc<45):
+            cpufan.off()
             
         # Checks time of day and set the right color
         if (MODE==0): # Using RGB leds
