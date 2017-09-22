@@ -28,7 +28,7 @@ import ImageDraw
 # 10    GND         GND
 
 MODE = 0 # Use RGB led strips for lighting. Put 1 for on/off lamps
-PWMF = 0 # Use standard pwm for RGB led strip. Put 1 to use PWMLed with different frequency set
+PWMF = 1 # Use standard pwm for RGB led strip. Put 1 to use PWMLed with different frequency set
 
 # Configuration defaults
 t_fan_on = 25 # Temp for starting the fan
@@ -176,8 +176,8 @@ def DataUpdate(t):
 
 # Read CPU temperature
 def getCPUtemperature():
-    res = os.popen(‘vcgencmd measure_temp’).readline()
-    temp =(res.replace(“temp=”,””).replace(“’C\n”,””))
+    res = os.popen('vcgencmd measure_temp').readline()
+    temp =(res.replace("temp=","").replace("'C\n",""))
     return float(temp)
         
 # Main program
