@@ -48,7 +48,7 @@ tf2 = "12:10" # End of lunch time, so fan can work again
 
 # Hardware settings
 fan = LED(25) # Water cooling fan
-cpufan = LED(21) # System cooling fan
+cpufan = LED(12) # System cooling fan
 if (MODE==0):
     if (PWMF==0):
         led = RGBLED(red=17, green=18, blue=27) # RGB leds strip
