@@ -60,7 +60,7 @@ else:
     lamp1 = LED(17) # First lamp relay
     lamp2 = LED(18) # Second lamp relay
     lamp3 = LED(27) # Third lamp relay
-food = LED(12) # Feeding motor
+
 backlight = PWMLED(26,frequency=500) # LCD backlight
 sensor = W1ThermSensor() # Temperature sensor
 
